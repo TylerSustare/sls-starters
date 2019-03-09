@@ -7,20 +7,22 @@ const uri = `${global.__MONGO_URI__}${global.__MONGO_DB_NAME__}`
 
 let connection;
 let db;
+let conn;
 
 beforeAll(async() => {
     connection = await MongoClient.connect(global.__MONGO_URI__, { useNewUrlParser: true });
     db = await connection.db(global.__MONGO_DB_NAME__);
+    conn = await connect(uri);
 });
 
 afterAll(async() => {
     await connection.close();
+    await conn.close()
     // await db.close();
 });
 
 describe('mongoose model test', () => {
     it('should test the mongoose model', async() => {
-        const conn = await connect(uri);
         conn.model('Fork', new mongoose.Schema({ name: String }));
 
         const M = conn.model('Fork');
@@ -29,8 +31,8 @@ describe('mongoose model test', () => {
         expect(spoon).toEqual(null);
         const fork = await M.findOne({ name: 'fork' });
         expect(fork.name).toEqual('fork');
-
-        await conn.close()
+        // const Spork = require('../models/spork');
+        // const a = await Spork.create({ name: 'spork1', material: 'plastic', hasLittleKnifeSide: false });
     })
 })
 
@@ -44,7 +46,7 @@ describe('testing mongodb local', () => {
         expect(c).toEqual(true)
     })
 
-    it('should aggregate docs from collection', async() => {
+    it('should test mongo docs from collection', async() => {
         const files = db.collection('files');
 
         await files.insertMany([
