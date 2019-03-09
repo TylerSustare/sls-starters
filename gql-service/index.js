@@ -1,7 +1,8 @@
 const mongoose = require('mongoose')
 const uuid = require('uuid/v4')
-const { connect } = require('./models');
+const { connect, Fork } = require('./models');
 let conn = null;
+let M;
 const uri = 'mongodb+srv://sustare_atlas_user:4hfMik9L9IDr1neQ@sustare-stfjh.mongodb.net/fork?retryWrites=true' // db name goes here
 
 module.exports.handler = async function(event, context) {
@@ -15,11 +16,11 @@ module.exports.handler = async function(event, context) {
   // potentially expensive process of connecting to MongoDB every time.
   if (conn == null) {
     conn = await connect(uri);
-    conn.model('Fork', new mongoose.Schema({ name: String }));
+    M = Fork(conn);
+    console.log('connection to mongodb established') // block the event loop for research purposes 
   }
 
-  const M = conn.model('Fork');
-  const a = await M.create({ name: `forker-${uuid()}` })
+  const a = await M.create({ name: `fork-${uuid()}` })
   const doc = await M.find();
   const response = {
     "statusCode": 200,

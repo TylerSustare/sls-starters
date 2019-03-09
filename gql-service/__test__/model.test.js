@@ -2,7 +2,7 @@
 /*global beforeAll afterAll expect*/
 const { MongoClient } = require('mongodb');
 const mongoose = require('mongoose')
-const { connect } = require('../models');
+const { connect, Fork } = require('../models');
 const uri = `${global.__MONGO_URI__}${global.__MONGO_DB_NAME__}`
 
 let connection;
@@ -18,21 +18,16 @@ beforeAll(async() => {
 afterAll(async() => {
     await connection.close();
     await conn.close()
-    // await db.close();
 });
 
 describe('mongoose model test', () => {
     it('should test the mongoose model', async() => {
-        conn.model('Fork', new mongoose.Schema({ name: String }));
-
-        const M = conn.model('Fork');
-        const a = await M.create({ name: 'fork' });
+        const M = Fork(conn);
+        await M.create({ name: 'fork' });
         const spoon = await M.findOne({ name: 'spoon' });
         expect(spoon).toEqual(null);
         const fork = await M.findOne({ name: 'fork' });
         expect(fork.name).toEqual('fork');
-        // const Spork = require('../models/spork');
-        // const a = await Spork.create({ name: 'spork1', material: 'plastic', hasLittleKnifeSide: false });
     })
 })
 

@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 module.exports = (() => {
+    // connection
     const connect = async(uri) => {
         return await mongoose.createConnection(uri, {
             // Buffering means mongoose will queue up operations if it gets
@@ -11,5 +12,12 @@ module.exports = (() => {
         });
     }
 
-    return { connect };
+    // models with a little dependency injection
+    const Fork = (conn) => {
+        const forkSchema = new mongoose.Schema({ name: String });
+        conn.model('Fork', forkSchema);
+        const M = conn.model('Fork');
+        return M;
+    }
+    return { connect, Fork };
 })()
