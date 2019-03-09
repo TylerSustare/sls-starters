@@ -1,7 +1,9 @@
 // test.js
 /*global beforeAll afterAll expect*/
 const { MongoClient } = require('mongodb');
-const handler = require('../index.js').handler;
+const mongoose = require('mongoose')
+const { connect } = require('../models');
+const uri = `${global.__MONGO_URI__}${global.__MONGO_DB_NAME__}`
 
 let connection;
 let db;
@@ -18,14 +20,7 @@ afterAll(async() => {
 
 describe('mongoose model test', () => {
     it('should test the mongoose model', async() => {
-        const mongoose = require('mongoose')
-        const uri = `${global.__MONGO_URI__}${global.__MONGO_DB_NAME__}`
-
-        const conn = await mongoose.createConnection(uri, {
-            useNewUrlParser: true,
-            bufferCommands: false,
-            bufferMaxEntries: 0
-        });
+        const conn = await connect(uri);
         conn.model('Fork', new mongoose.Schema({ name: String }));
 
         const M = conn.model('Fork');

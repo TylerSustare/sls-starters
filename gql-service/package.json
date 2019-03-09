@@ -4,8 +4,9 @@
   "description": "",
   "main": "handler.js",
   "scripts": {
-    "test": "./node_modules/jest/bin/jest.js --config ./jest.config.js",
-    "test-debug": "./node_modules/jest/bin/jest.js --config ./jest.config.js --debug"
+    "test": "NODE_ENV=test ./node_modules/jest/bin/jest.js --config ./jest.config.js",
+    "test-debug": "NODE_ENV=test ./node_modules/jest/bin/jest.js --config ./jest.config.js --debug",
+    "deploy": "sls deploy"
   },
   "author": "",
   "license": "ISC",

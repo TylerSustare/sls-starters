@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const uuid = require('uuid/v4')
+const { connect } = require('./models');
 let conn = null;
 const uri = 'mongodb+srv://sustare_atlas_user:4hfMik9L9IDr1neQ@sustare-stfjh.mongodb.net/fork?retryWrites=true' // db name goes here
 
@@ -13,14 +14,7 @@ module.exports.handler = async function(event, context) {
   // This means your Lambda function doesn't have to go through the
   // potentially expensive process of connecting to MongoDB every time.
   if (conn == null) {
-    conn = await mongoose.createConnection(uri, {
-      // Buffering means mongoose will queue up operations if it gets
-      // disconnected from MongoDB and send them when it reconnects.
-      // With serverless, better to fail fast if not connected.
-      useNewUrlParser: true,
-      bufferCommands: false, // Disable mongoose buffering
-      bufferMaxEntries: 0 // and MongoDB driver buffering
-    });
+    conn = await connect(uri);
     conn.model('Fork', new mongoose.Schema({ name: String }));
   }
 
@@ -32,7 +26,7 @@ module.exports.handler = async function(event, context) {
     "headers": {
       "my_header": "my_value"
     },
-    "body": JSON.stringify(doc),
+    "body": JSON.stringify(doc, null, 2),
     "isBase64Encoded": false
   };
   return response;
