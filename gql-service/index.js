@@ -17,7 +17,10 @@ module.exports.handler = async function(event, context) {
   if (conn == null) {
     conn = await connect(uri);
     M = Fork(conn);
-    console.log('connection to mongodb established') // block the event loop for research purposes 
+    console.log('connection to mongodb established') // block the event loop for research 
+  }
+  else {
+    console.log('NOT connecting') // block the event loop for research 
   }
 
   const a = await M.create({ name: `fork-${uuid()}` })
