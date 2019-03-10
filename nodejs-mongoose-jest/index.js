@@ -4,7 +4,7 @@ const { connect, Fork } = require('./models');
 const res = require('./lib/response');
 let conn = null;
 let M;
-const uri = 'mongodb+srv://sustare_atlas_user:4hfMik9L9IDr1neQ@sustare-stfjh.mongodb.net/fork?retryWrites=true' // db name goes here
+const uri = 'mongodb  uri' // db name goes here
 
 module.exports.handler = async(event, context) => {
   // Make sure to add this so you can re-use `conn` between function calls.
@@ -18,13 +18,13 @@ module.exports.handler = async(event, context) => {
   if (conn == null) {
     conn = await connect(uri);
     M = Fork(conn);
-    console.log('connection to mongodb established') // block the event loop for research 
+    console.log('CONNECTING') // block the event loop for research 
   }
   else {
     console.log('NOT connecting') // block the event loop for research 
   }
 
-  const a = await M.create({ name: `fork-${uuid()}` })
+  await M.create({ name: `fork-${uuid()}`, prongs: Math.floor(Math.random() * 10) })
   const doc = await M.find();
   return res.OK(doc);
 };
