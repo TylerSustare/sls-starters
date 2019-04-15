@@ -1,0 +1,17 @@
+{
+  "name": "apollo-gql",
+  "version": "1.0.0",
+  "description": "SLS starter project using ApolloServer lambda. https://www.apollographql.com/docs/apollo-server/deployment/lambda",
+  "main": "handler.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "apollo-server-lambda": "^2.4.8",
+    "graphql": "^14.2.1",
+    "lodash": "^4.17.11"
+  }
+}
