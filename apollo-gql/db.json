@@ -1,0 +1,8 @@
+{
+  "users": [
+    { "first": "John", "last": "Snow", "title": "King in the North" },
+    { "first": "Daenerys", "last": "Targaryen", "title": "Lots of them" },
+    { "first": "Arya", "last": "Stark", "title": "None" },
+    { "first": "Tyrion", "last": "Lanister", "title": "Hand of the queen" }
+  ]
+}

@@ -1,31 +1,35 @@
 const { ApolloServer, gql } = require('apollo-server-lambda');
-const _ = require('lodash');
-
-const names = [
-  { first: 'John', last: 'Snow' },
-  { first: 'Daenerys', last: 'Targaryen' },
-  { first: 'Arya', last: 'Stark' },
-  { first: 'Tyrion', last: 'Lanister' }
-]
+const low = require('lowdb')
+const FileSync = require('lowdb/adapters/FileSync')
+const adapter = new FileSync('db.json')
+const db = low(adapter)
 
 // Construct a schema, using GraphQL schema language
 const typeDefs = gql `
   type Query {
-    hello(name: String): String
+    user(name: String): String
+    users(name: String): [String]
   }
 `;
 
 // Provide resolver functions for your schema fields
 const resolvers = {
   Query: {
-    //hello: (parent, args, context, info) => `parent:${parent}, args:${args}, context:${context}, info:${info}`,
-    hello: (parent, args, context, info) => {
+    user: (parent, args, context, info) => {
       try {
-        return `Hello ${args.name} ${_.find(names, {first: args.name}).last}`;
+        const user = db.get('users')
+          .filter({ first: args.name })
+          .take(1)
+          .value()[0];
+        return `${user.first} ${user.last}`;
       }
       catch (e) {
-        return 'Unable to get name';
+        return 'Unable to get user';
       }
+    },
+    users: (parent, args, context, info) => {
+      const users = db.get('users').value();
+      return users.map(user => `${user.first} ${user.last}`);
     }
   },
 };
