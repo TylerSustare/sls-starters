@@ -1,0 +1,56 @@
+
+service: my-service # NOTE: update this with your service name
+plugins:
+  - serverless-express # <- like so
+  
+provider:
+  name: aws
+  runtime: nodejs8.10
+  iamRoleStatements:
+  - Action:
+      - dynamodb:Query
+      - dynamodb:Scan
+      - dynamodb:GetItem
+      - dynamodb:PutItem
+      - dynamodb:UpdateItem
+      - dynamodb:DeleteItem
+    Resource: 
+      "Fn::Join":
+        - ""
+        -
+          - "arn:aws:dynamodb:"
+          - Ref: "AWS::Region"
+          - ":"
+          - Ref: "AWS::AccountId"
+          - ":table/"
+          - Ref: userz
+    Effect: Allow
+
+functions:
+  hello:
+    handler: handler.api
+    events:
+    - http: 
+        path: /users
+        method: get
+    - http: 
+        path: /user
+        method: post
+        
+resources:
+  Resources:
+    userz:
+      Type: 'AWS::DynamoDB::Table'
+      Properties:
+        AttributeDefinitions:
+          -
+            AttributeName: id
+            AttributeType: S
+        KeySchema:
+          -
+            AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        TableName: 'userz'
