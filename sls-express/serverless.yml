@@ -1,8 +1,5 @@
+service: sls-express # NOTE: update this with your service name
 
-service: my-service # NOTE: update this with your service name
-plugins:
-  - serverless-express # <- like so
-  
 provider:
   name: aws
   runtime: nodejs8.10
@@ -14,7 +11,7 @@ provider:
       - dynamodb:PutItem
       - dynamodb:UpdateItem
       - dynamodb:DeleteItem
-    Resource: 
+    Resource:
       "Fn::Join":
         - ""
         -
@@ -23,34 +20,37 @@ provider:
           - ":"
           - Ref: "AWS::AccountId"
           - ":table/"
-          - Ref: userz
+          - Ref: SlsEpresssExampleUsers
     Effect: Allow
 
 functions:
   hello:
     handler: handler.api
     events:
-    - http: 
+    - http:
         path: /users
         method: get
-    - http: 
+    - http:
         path: /user
         method: post
-        
+
 resources:
   Resources:
-    userz:
+    SlsEpresssExampleUsers:
       Type: 'AWS::DynamoDB::Table'
-      Properties:
+      Properties: 
         AttributeDefinitions:
           -
-            AttributeName: id
+            AttributeName: email
             AttributeType: S
         KeySchema:
           -
-            AttributeName: id
+            AttributeName: email
             KeyType: HASH
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
-        TableName: 'userz'
+        TableName: 'SlsEpresssExampleUsers'
+
+plugins:
+  - serverless-express

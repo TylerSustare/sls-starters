@@ -1,0 +1,10 @@
+{
+  "name": "sls-express",
+  "description": "",
+  "version": "0.1.0",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "uuid": "^3.3.2"
+    "serverless-express": "^2.0.11"
+  }
+}

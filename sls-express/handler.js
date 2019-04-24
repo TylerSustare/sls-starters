@@ -5,35 +5,35 @@ const handler = require('serverless-express/handler')
 const bodyParser = require('body-parser');
 const uuid = require('uuid/v4');
 
-var app = express();
+const app = express();
 app.use(bodyParser.json({ strict: false }));
 
 
 app.get('/users', async(req, res, next) => {
-  const users = await doc.scan({
-    TableName: 'userz'
-  }).promise();
-  return res.status(200).send(users)
+    const users = await doc.scan({
+        TableName: 'SlsEpresssExampleUsers'
+    }).promise();
+    return res.status(200).send(users)
 });
 
 app.post('/user', async(req, res, next) => {
-  const { username, pass } = req.body;
-  const user = {
-    id: uuid(),
-    username,
-    pass
-  };
-  try {
-    await doc.put({
-      Item: user,
-      TableName: 'userz'
-    }).promise();
+    const { username, hair_color } = req.body;
+    const user = {
+        email: uuid(),
+        username,
+        hair_color
+    };
+    try {
+        await doc.put({
+            Item: user,
+            TableName: 'SlsEpresssExampleUsers'
+        }).promise();
 
-    return res.status(201).send(user);
-  }
-  catch (e) {
-    return res.status(500).send(e);
-  }
+        return res.status(201).send(user);
+    }
+    catch (e) {
+        return res.status(500).send(e);
+    }
 });
 
 
