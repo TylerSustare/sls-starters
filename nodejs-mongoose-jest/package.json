@@ -4,6 +4,7 @@
   "description": "Starter template for nodejs serverless project using mongodb and mongoose with jest for testing",
   "main": "index.js",
   "scripts": {
+    "deploy": "sls deploy",
     "test": "NODE_ENV=test ./node_modules/jest/bin/jest.js --config ./jest.config.js"
   },
   "keywords": [

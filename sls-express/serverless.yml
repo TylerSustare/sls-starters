@@ -54,3 +54,4 @@ resources:
 
 plugins:
   - serverless-express
+  - serverless-offline

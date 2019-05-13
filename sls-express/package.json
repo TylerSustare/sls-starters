@@ -2,9 +2,16 @@
   "name": "sls-express",
   "description": "",
   "version": "0.1.0",
+  "scripts": {
+    "start": "sls offline --port 8080"
+  },
   "dependencies": {
+    "aws-sdk": "^2.442.0",
     "body-parser": "^1.18.3",
+    "serverless-express": "^2.0.11",
     "uuid": "^3.3.2"
-    "serverless-express": "^2.0.11"
+  },
+  "devDependencies": {
+    "serverless-offline": "^4.9.4"
   }
 }
