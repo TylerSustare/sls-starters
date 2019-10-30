@@ -1,0 +1,12 @@
+{
+    "env": {
+        "node": true
+    },
+    "extends": "./node_modules/eslint-config-cbtnuggets/rules/node-es6.js",
+    "parserOptions": {
+        "ecmaVersion": 2017
+    },
+    "rules": {
+        "no-trailing-spaces": "error"
+    }
+}
