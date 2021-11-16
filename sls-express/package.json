@@ -6,7 +6,7 @@
     "start": "sls offline --port 8080"
   },
   "dependencies": {
-    "aws-sdk": "^2.442.0",
+    "aws-sdk": "^2.814.0",
     "body-parser": "^1.18.3",
     "serverless-express": "^2.0.11",
     "uuid": "^3.3.2"
