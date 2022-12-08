@@ -7,7 +7,7 @@
   },
   "dependencies": {
     "aws-sdk": "^2.442.0",
-    "body-parser": "^1.18.3",
+    "body-parser": "^1.20.1",
     "serverless-express": "^2.0.11",
     "uuid": "^3.3.2"
   },
